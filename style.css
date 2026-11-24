@@ -325,11 +325,11 @@ body::after {
 }
 
 .ticker-right .ticker-track {
-  animation: tickerRight 25s linear infinite;
+  animation: tickerRight 50s linear infinite;
 }
 
 .ticker-left .ticker-track {
-  animation: tickerLeft 30s linear infinite;
+  animation: tickerLeft 60s linear infinite;
 }
 
 .ticker-logo {
@@ -341,11 +341,11 @@ body::after {
 
 @keyframes tickerRight {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-25%); }
+  100% { transform: translateX(-16.667%); }
 }
 
 @keyframes tickerLeft {
-  0% { transform: translateX(-25%); }
+  0% { transform: translateX(-16.667%); }
   100% { transform: translateX(0); }
 }
 
