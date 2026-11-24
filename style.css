@@ -101,7 +101,7 @@ body::after {
 /* --- Screens --- */
 #app {
   width: 100%;
-  padding: 24px 0;
+  padding: 24px 20px;
   position: relative;
   z-index: 3;
 }
@@ -302,7 +302,8 @@ body::after {
 
 /* --- Logo Tickers --- */
 .ticker-wrap {
-  width: 100%;
+  width: calc(100% + 40px);
+  margin-left: -20px;
   overflow: hidden;
   margin-bottom: 20px;
   opacity: 0.5;
