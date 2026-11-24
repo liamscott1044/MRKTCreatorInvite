@@ -30,6 +30,11 @@
     Object.values(screens).forEach(s => s.classList.remove('active'));
     screens[name].classList.add('active');
 
+    // Stretch tickers to full viewport width
+    if (name === 'invite') {
+      requestAnimationFrame(resizeTickers);
+    }
+
     // Scroll to top and unlock scroll for form
     window.scrollTo(0, 0);
     document.body.style.overflow = name === 'rsvp' ? 'auto' : 'hidden';
@@ -173,6 +178,20 @@
       window.prompt('Copy this link:', url);
     });
   }
+
+  // ---- Ticker full-width sizing ----
+  function resizeTickers() {
+    const wrap = document.querySelector('.ticker-wrap');
+    if (!wrap) return;
+    // Reset so we can measure the natural position
+    wrap.style.width = '';
+    wrap.style.marginLeft = '';
+    const rect = wrap.getBoundingClientRect();
+    wrap.style.width = window.innerWidth + 'px';
+    wrap.style.marginLeft = -rect.left + 'px';
+  }
+
+  window.addEventListener('resize', resizeTickers);
 
   // ---- Keyboard handling for iOS ----
   // Scroll inputs into view when focused (avoids keyboard overlap)
