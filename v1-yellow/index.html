@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>You're Invited — Maison MRKT</title>
+
+  <!-- ============================================================
+       DEPLOY: Replace this placeholder domain with your real domain
+       ============================================================ -->
+  <!-- PLACEHOLDER_DOMAIN: https://invite.maisonmrkt.com -->
+  <meta property="og:url" content="https://invite.maisonmrkt.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="You're Invited — Maison MRKT">
+  <meta property="og:description" content="RSVP to receive details.">
+  <!-- DEPLOY: Replace og-image.png with a designed 1200x630 raster image for best iMessage preview -->
+  <meta property="og:image" content="https://invite.maisonmrkt.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="You're Invited — Maison MRKT">
+  <meta name="twitter:description" content="RSVP to receive details.">
+  <meta name="twitter:image" content="https://invite.maisonmrkt.com/og-image.png">
+
+  <meta name="theme-color" content="#D6D6D6">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Full-screen photo background for envelope screen -->
+  <div class="envelope-bg" id="envelope-bg" aria-hidden="true"></div>
+
+  <!-- ===== SCREEN 1: ENVELOPE ===== -->
+  <main id="app">
+    <section id="envelope-screen" class="screen active">
+      <div id="envelope-stage" role="button" tabindex="0" aria-label="Open invitation">
+
+        <div class="envelope-assembly">
+          <svg id="envelope-svg" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+            <defs>
+              <clipPath id="card-clip">
+                <rect x="10" y="-600" width="300" height="830"/>
+              </clipPath>
+            </defs>
+
+            <!-- Envelope body -->
+            <rect class="draw-line envelope-body-line" x="10" y="60" width="300" height="170" rx="0"
+                  stroke="rgba(255,255,255,0.85)" stroke-width="1.5"/>
+
+            <!-- Card inside -->
+            <g clip-path="url(#card-clip)">
+              <g class="card-group">
+                <rect class="card-rect" x="35" y="78" width="250" height="340" rx="0"
+                      fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+                <text x="160" y="220" text-anchor="middle" fill="rgba(255,255,255,0.8)"
+                      font-family="ui-monospace, 'SF Mono', monospace" font-size="8"
+                      letter-spacing="4" opacity="0">YOU'RE INVITED</text>
+              </g>
+            </g>
+
+            <!-- V-fold -->
+            <path class="envelope-vfold" d="M10 230 L160 145 L310 230 Z" fill="rgba(255,255,255,0.06)"/>
+            <path class="draw-line envelope-vfold-line" d="M10 230 L160 145 L310 230"
+                  stroke="rgba(255,255,255,0.3)" stroke-width="0.75" fill="none"/>
+
+            <!-- Flap -->
+            <path class="flap-fill" d="M11 60 L160 158 L309 60 Z" fill="rgba(255,255,255,0.1)"/>
+            <path class="draw-line flap-stroke" d="M10 60 L160 160 L310 60"
+                  stroke="rgba(255,255,255,0.85)" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+
+        <p class="tap-hint">tap to open</p>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 2: INVITE CARD ===== -->
+    <section id="invite-screen" class="screen">
+      <!-- Logo tickers -->
+      <div class="ticker-wrap">
+        <div class="ticker ticker-right">
+          <div class="ticker-track">
+            <img src="logos/logo-4.png" alt="" class="ticker-logo">
+            <img src="logos/logo-16.png" alt="" class="ticker-logo">
+            <img src="logos/logo-6.png" alt="" class="ticker-logo">
+            <img src="logos/logo-12.png" alt="" class="ticker-logo">
+            <img src="logos/logo-1.png" alt="" class="ticker-logo">
+            <img src="logos/logo-9.png" alt="" class="ticker-logo">
+            <img src="logos/logo-14.png" alt="" class="ticker-logo">
+            <img src="logos/logo-5.png" alt="" class="ticker-logo">
+            <img src="logos/logo-13.png" alt="" class="ticker-logo">
+            <img src="logos/logo-4.png" alt="" class="ticker-logo">
+            <img src="logos/logo-16.png" alt="" class="ticker-logo">
+            <img src="logos/logo-6.png" alt="" class="ticker-logo">
+            <img src="logos/logo-12.png" alt="" class="ticker-logo">
+            <img src="logos/logo-1.png" alt="" class="ticker-logo">
+            <img src="logos/logo-9.png" alt="" class="ticker-logo">
+            <img src="logos/logo-14.png" alt="" class="ticker-logo">
+            <img src="logos/logo-5.png" alt="" class="ticker-logo">
+            <img src="logos/logo-13.png" alt="" class="ticker-logo">
+          </div>
+        </div>
+        <div class="ticker ticker-left">
+          <div class="ticker-track">
+            <img src="logos/logo-15.png" alt="" class="ticker-logo">
+            <img src="logos/logo-3.png" alt="" class="ticker-logo">
+            <img src="logos/logo-8.png" alt="" class="ticker-logo">
+            <img src="logos/logo-16.png" alt="" class="ticker-logo">
+            <img src="logos/logo-11.png" alt="" class="ticker-logo">
+            <img src="logos/logo-2.png" alt="" class="ticker-logo">
+            <img src="logos/logo-7.png" alt="" class="ticker-logo">
+            <img src="logos/logo-10.png" alt="" class="ticker-logo">
+            <img src="logos/logo-15.png" alt="" class="ticker-logo">
+            <img src="logos/logo-3.png" alt="" class="ticker-logo">
+            <img src="logos/logo-8.png" alt="" class="ticker-logo">
+            <img src="logos/logo-16.png" alt="" class="ticker-logo">
+            <img src="logos/logo-11.png" alt="" class="ticker-logo">
+            <img src="logos/logo-2.png" alt="" class="ticker-logo">
+            <img src="logos/logo-7.png" alt="" class="ticker-logo">
+            <img src="logos/logo-10.png" alt="" class="ticker-logo">
+          </div>
+        </div>
+      </div>
+
+      <div class="invite-card">
+        <div class="card-inner">
+          <p class="invite-kicker">you're invited</p>
+
+          <!-- ========== EDIT YOUR EVENT DETAILS HERE ========== -->
+          <h1 class="invite-title">The MRKT Social</h1>
+          <p class="invite-date">Wednesday, December 9th · 7pm</p>
+          <!-- ================================================== -->
+
+          <p class="invite-tagline">A Night for Up and Coming Creators</p>
+          <p class="invite-venue">Chinatown, RSVP for address</p>
+
+          <div class="card-line-accent"></div>
+
+          <button id="rsvp-btn" class="btn btn-primary">RSVP</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 3: RSVP FORM ===== -->
+    <section id="rsvp-screen" class="screen">
+      <div class="form-card">
+        <p class="form-kicker">rsvp</p>
+        <form id="rsvp-form" novalidate>
+          <div class="field">
+            <label for="field-name">Name</label>
+            <input id="field-name" name="name" type="text" required autocomplete="name" placeholder="full name">
+          </div>
+          <div class="field">
+            <label for="field-ig">Instagram</label>
+            <input id="field-ig" name="instagram" type="text" required autocomplete="username" placeholder="@" inputmode="text">
+          </div>
+          <div class="field">
+            <label for="field-email">Email</label>
+            <input id="field-email" name="email" type="email" required autocomplete="email" placeholder="email" inputmode="email">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 4: CONFIRMATION ===== -->
+    <section id="confirm-screen" class="screen">
+      <div class="confirm-card">
+        <div class="confirm-check">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="22" stroke="#FF2D55" stroke-width="1"/>
+            <path class="check-mark" d="M14 24 L21 31 L34 18" stroke="#FF2D55" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="confirm-title">You're in</h2>
+        <p class="confirm-copy">we'll review + send details soon</p>
+        <p class="confirm-signoff">with love, maison mrkt</p>
+
+        <div class="share-section">
+          <p class="share-copy">know someone who should be there?</p>
+          <button id="share-btn" class="btn btn-secondary">Share invite</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Corner marks -->
+  <div class="corner-lines">
+    <svg class="corner tl" viewBox="0 0 60 60"><path d="M0 50 L0 0 L50 0" stroke="#FF2D55" stroke-width="1" fill="none" opacity="0.35"/></svg>
+    <svg class="corner br" viewBox="0 0 60 60"><path d="M60 10 L60 60 L10 60" stroke="#FF2D55" stroke-width="1" fill="none" opacity="0.35"/></svg>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

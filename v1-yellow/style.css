@@ -1,0 +1,787 @@
+/* ============================================================
+   Maison MRKT — Creator Network Invite
+   Aesthetic: brat / post-techno / neon / pixel grid
+   Palette: Lime #8ACE00 · Neon Pink #FF2D55 · Black #0A0A0A
+   Font:   Maison Neue Extended (Book / Demi) + system mono
+   ============================================================ */
+
+/* --- @font-face — Maison Neue Extended --- */
+@font-face {
+  font-family: 'Maison Neue Extended';
+  src: url('fonts/MaisonNeueExtended-Book.otf') format('opentype'),
+       url('fonts/MaisonNeueExtended-Book.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Maison Neue Extended';
+  src: url('fonts/MaisonNeueExtended-BookItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Maison Neue Extended';
+  src: url('fonts/MaisonNeueExtended-Demi.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --pink: #FF2D55;
+  --bg: #D6D6D6;
+  --bg-card: #CCCCCC;
+  --text: #FF2D55;
+  --muted: rgba(255,45,85,0.6);
+  --dim: rgba(255,45,85,0.35);
+  --font: 'Maison Neue Extended', 'Helvetica Neue', sans-serif;
+  --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Consolas', monospace;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Pixel grid overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px);
+  background-size: 4px 4px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Scanline + vignette overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 55% at center, transparent 50%, rgba(0,0,0,0.22) 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* --- Screens --- */
+#app {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px 20px;
+  position: relative;
+  z-index: 3;
+}
+
+.screen {
+  display: none;
+  animation: fadeIn 0.5s ease both;
+}
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Envelope Screen --- */
+#envelope-screen {
+  position: relative;
+  z-index: 3;
+}
+
+.envelope-bg {
+  position: fixed;
+  inset: 0;
+  background: url('bg.jpg') center / cover no-repeat;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.8s ease-out;
+}
+
+.envelope-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.envelope-bg.hidden {
+  opacity: 0;
+  z-index: -1;
+}
+
+#envelope-stage {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+#envelope-stage:focus-visible {
+  outline: 1px solid var(--pink);
+  outline-offset: 8px;
+}
+
+.envelope-assembly {
+  position: relative;
+  width: 260px;
+}
+
+.envelope-assembly::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+#envelope-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: none;
+}
+
+/* --- Stroke draw-in animation --- */
+.draw-line {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: drawLine 1.8s ease forwards;
+}
+
+.envelope-vfold-line {
+  animation-delay: 0.3s;
+}
+
+.flap-stroke {
+  animation-delay: 0.5s;
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Card text pulse */
+.card-group text {
+  animation: textGlitch 0.8s 2s ease both;
+}
+
+@keyframes textGlitch {
+  0% { opacity: 0; }
+  40% { opacity: 0.8; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.6; }
+}
+
+/* --- Flap open animation --- */
+.flap-fill,
+.flap-stroke {
+  transform-origin: 160px 60px;
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#envelope-stage.opening .flap-fill,
+#envelope-stage.opening .flap-stroke {
+  transform: scaleY(-0.6) translateY(-8px);
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.5s 0.7s ease;
+}
+
+/* --- Card rise animation --- */
+.card-group {
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s,
+              opacity 0.4s ease 0.8s;
+}
+
+#envelope-stage.opening .card-group {
+  transform: translateY(-280px);
+  opacity: 0;
+}
+
+/* --- Envelope body fades down after card exits --- */
+.envelope-body-line,
+.envelope-vfold,
+.envelope-vfold-line {
+  transition: transform 0.6s ease 0.7s,
+              opacity 0.5s ease 0.7s;
+}
+
+#envelope-stage.opening .envelope-body-line,
+#envelope-stage.opening .envelope-vfold,
+#envelope-stage.opening .envelope-vfold-line {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+/* --- Tap hint --- */
+.tap-hint {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  animation: blink 3s 2s ease both;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes blink {
+  0% { opacity: 0; }
+  50% { opacity: 0.6; }
+  55% { opacity: 0; }
+  60% { opacity: 0.6; }
+  100% { opacity: 0.4; }
+}
+
+#envelope-stage.opening .tap-hint {
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.5s 0.7s ease;
+}
+
+/* --- Noise texture mixin (shared by cards + buttons) --- */
+.noise-texture {
+  position: relative;
+}
+
+.noise-texture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* --- Logo Tickers --- */
+.ticker-wrap {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.ticker {
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: max-content;
+  will-change: transform;
+}
+
+.ticker-right .ticker-track {
+  animation: tickerRight 25s linear infinite;
+}
+
+.ticker-left .ticker-track {
+  animation: tickerLeft 30s linear infinite;
+}
+
+.ticker-logo {
+  height: 18px;
+  width: auto;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+@keyframes tickerRight {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes tickerLeft {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* --- Invite Card --- */
+.invite-card {
+  width: 100%;
+  padding: 56px 28px;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+  border: none;
+  /* Distinct inner background — slightly warmer/lighter than page */
+  background: #C4C4C4;
+}
+
+/* Hand-drawn wobbly border via SVG background */
+.invite-card::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  pointer-events: none;
+  /* Wobbly rect drawn with slight imperfections */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='500' fill='none'%3E%3Cpath d='M3 6 Q200 2 397 5 Q399 250 398 495 Q200 498 2 496 Q1 250 3 6Z' stroke='%23FF2D55' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Inner texture — heavier grain on the card bg */
+.invite-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.card-inner {
+  animation: cardReveal 0.8s ease both;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.invite-kicker {
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  color: var(--pink);
+  margin-bottom: 20px;
+  opacity: 0.85;
+}
+
+.invite-title {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+/* Thin decorative rule under title */
+.invite-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--pink), transparent);
+  margin: 20px auto 0;
+}
+
+.invite-date {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: var(--pink);
+  margin-bottom: 28px;
+}
+
+.invite-copy {
+  display: none;
+}
+
+.invite-note {
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 44px;
+}
+
+.invite-tagline {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.invite-venue {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 44px;
+}
+
+.card-line-accent {
+  display: none;
+}
+
+/* --- Buttons --- */
+.btn {
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: var(--pink);
+  color: var(--bg);
+  padding: 16px 52px;
+  border-radius: 100px;
+  display: inline-block;
+}
+
+/* Shimmer sweep on primary */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: shimmer 3s 1s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  40% { left: 150%; }
+  100% { left: 150%; }
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255, 45, 85, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.97) translateY(0);
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  padding: 14px 36px;
+  border: 1px solid var(--pink);
+  border-radius: 100px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 45, 85, 0.06);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* --- RSVP Form --- */
+.form-card {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  border: none;
+  padding: 40px 24px;
+}
+
+.form-kicker {
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  color: var(--pink);
+  margin-bottom: 36px;
+  opacity: 0.7;
+}
+
+#rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.field {
+  width: 100%;
+  text-align: left;
+}
+
+.field label {
+  display: block;
+  font-family: var(--font);
+  font-size: 0.65rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.field input {
+  width: 100%;
+  font-family: var(--font);
+  font-size: 1rem;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--dim);
+  padding: 10px 0;
+  outline: none;
+  transition: border-color 0.2s;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.field input:focus {
+  border-bottom-color: var(--pink);
+}
+
+.field input::placeholder {
+  color: var(--dim);
+}
+
+.field input.error {
+  border-bottom-color: var(--pink);
+}
+
+.field .error-msg {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--pink);
+  margin-top: 4px;
+  display: none;
+}
+
+.field input.error + .error-msg {
+  display: block;
+}
+
+#rsvp-form .btn-primary {
+  margin-top: 16px;
+}
+
+/* --- Confirmation --- */
+.confirm-card {
+  width: 100%;
+  text-align: center;
+  padding: 40px 24px;
+  position: relative;
+  border: none;
+}
+
+.confirm-check {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 28px;
+}
+
+.confirm-check svg {
+  width: 100%;
+  height: 100%;
+}
+
+.check-mark {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: drawCheck 0.5s 0.3s ease forwards;
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.confirm-title {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+
+.confirm-copy {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+.confirm-signoff {
+  font-family: var(--font);
+  font-size: 0.7rem;
+  font-style: italic;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+  margin-bottom: 48px;
+}
+
+.share-section {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* Thin gradient divider */
+.share-section::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pink), transparent);
+  margin: 0 auto 36px;
+}
+
+.share-copy {
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+}
+
+/* --- Corner decorations --- */
+.corner-lines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+}
+
+.corner.tl {
+  top: max(20px, env(safe-area-inset-top));
+  left: max(20px, env(safe-area-inset-left));
+}
+
+.corner.br {
+  bottom: max(20px, env(safe-area-inset-bottom));
+  right: max(20px, env(safe-area-inset-right));
+}
+
+/* --- Prefers reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .draw-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .card-group text {
+    animation: none;
+    opacity: 0.6;
+  }
+  .tap-hint {
+    animation: none;
+    opacity: 0.4;
+  }
+  .screen {
+    animation: none;
+  }
+  .card-inner {
+    animation: none;
+  }
+  .check-mark {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .flap-fill, .flap-stroke,
+  .card-group,
+  .envelope-body-line, .envelope-vfold, .envelope-vfold-line {
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* --- Desktop --- */
+@media (min-width: 600px) {
+  body {
+    background: var(--bg);
+  }
+
+  #app {
+    padding: 40px 32px;
+  }
+
+  .invite-card {
+    padding: 64px 36px;
+  }
+}
