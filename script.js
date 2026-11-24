@@ -7,7 +7,7 @@
 
   // ---- Config ----
   // DEPLOY: Replace with your Google Sheets / Apps Script endpoint
-  const SUBMIT_ENDPOINT = null; // e.g. 'https://script.google.com/macros/s/.../exec'
+  const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwd2_PPNi79OiiIJ7jr5igPpAJpjYh_AJAww1bxtxPhrFH_XYh5tuBUqwSasGZzQf63/exec';
 
   // DEPLOY: Replace with your real invite URL
   const INVITE_URL = 'https://invite.maisonmrkt.com'; // PLACEHOLDER_DOMAIN
@@ -124,7 +124,7 @@
         await fetch(SUBMIT_ENDPOINT, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(data),
         });
       } catch (err) {
