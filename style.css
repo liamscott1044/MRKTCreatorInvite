@@ -341,11 +341,11 @@ body::after {
 
 @keyframes tickerRight {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-25%); }
 }
 
 @keyframes tickerLeft {
-  0% { transform: translateX(-50%); }
+  0% { transform: translateX(-25%); }
   100% { transform: translateX(0); }
 }
 
