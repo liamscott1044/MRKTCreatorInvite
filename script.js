@@ -182,13 +182,11 @@
   // ---- Ticker full-width sizing ----
   function resizeTickers() {
     const wrap = document.querySelector('.ticker-wrap');
-    if (!wrap) return;
-    // Reset so we can measure the natural position
-    wrap.style.width = '';
-    wrap.style.marginLeft = '';
-    const rect = wrap.getBoundingClientRect();
+    if (!wrap || !wrap.parentElement) return;
+    // Measure parent's left offset instead of the ticker itself
+    var parentLeft = wrap.parentElement.getBoundingClientRect().left;
     wrap.style.width = window.innerWidth + 'px';
-    wrap.style.marginLeft = -rect.left + 'px';
+    wrap.style.marginLeft = -parentLeft + 'px';
   }
 
   window.addEventListener('resize', resizeTickers);
