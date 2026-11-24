@@ -101,8 +101,7 @@ body::after {
 /* --- Screens --- */
 #app {
   width: 100%;
-  max-width: 420px;
-  padding: 24px 20px;
+  padding: 24px 0;
   position: relative;
   z-index: 3;
 }
@@ -303,10 +302,7 @@ body::after {
 
 /* --- Logo Tickers --- */
 .ticker-wrap {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  margin-left: -50vw;
+  width: 100%;
   overflow: hidden;
   margin-bottom: 20px;
   opacity: 0.5;
@@ -354,6 +350,7 @@ body::after {
 /* --- Invite Card --- */
 .invite-card {
   width: 100%;
+  max-width: 420px;
   padding: 56px 28px;
   text-align: center;
   position: relative;
@@ -551,6 +548,7 @@ body::after {
 /* --- RSVP Form --- */
 .form-card {
   width: 100%;
+  max-width: 420px;
   text-align: center;
   position: relative;
   border: none;
@@ -637,6 +635,7 @@ body::after {
 /* --- Confirmation --- */
 .confirm-card {
   width: 100%;
+  max-width: 420px;
   text-align: center;
   padding: 40px 24px;
   position: relative;
