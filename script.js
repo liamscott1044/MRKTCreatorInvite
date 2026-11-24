@@ -26,9 +26,16 @@
   const shareBtn      = document.getElementById('share-btn');
 
   // ---- Helpers ----
+  const tickerWrap = document.getElementById('ticker-wrap');
+
   function showScreen(name) {
     Object.values(screens).forEach(s => s.classList.remove('active'));
     screens[name].classList.add('active');
+
+    // Show tickers only on the invite screen
+    if (tickerWrap) {
+      tickerWrap.style.display = name === 'invite' ? '' : 'none';
+    }
 
     // Scroll to top and unlock scroll for form
     window.scrollTo(0, 0);
