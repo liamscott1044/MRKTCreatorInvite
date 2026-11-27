@@ -94,8 +94,11 @@
     return valid;
   }
 
-  rsvpForm.addEventListener('submit', async (e) => {
+  let submitted = false;
+
+  rsvpForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (submitted) return;
 
     const nameInput = document.getElementById('field-name');
     const igInput   = document.getElementById('field-ig');
@@ -106,6 +109,11 @@
       .every(Boolean);
 
     if (!allValid) return;
+
+    submitted = true;
+    const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
 
     const data = {
       name:      nameInput.value.trim(),
@@ -118,18 +126,17 @@
     // Log to console (always, for debugging)
     console.log('[RSVP Submission]', data);
 
-    // Submit to endpoint if configured
+    // Fire and forget — no-cors response is opaque anyway
     if (SUBMIT_ENDPOINT) {
-      try {
-        await fetch(SUBMIT_ENDPOINT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(data),
-        });
-      } catch (err) {
+      fetch(SUBMIT_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        keepalive: true,
+        body: JSON.stringify(data),
+      }).catch((err) => {
         console.error('[RSVP Submit Error]', err);
-      }
+      });
     }
 
     showScreen('confirm');
